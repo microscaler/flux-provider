@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func Provider() terraform.ResourceProvider {
@@ -42,12 +42,14 @@ func Provider() terraform.ResourceProvider {
 	}
 }
 
+// ProviderClient holds metadata / config for use by Terraform resources
 type ProviderClient struct {
 	ApiVersion string
 	Hostname   string
 	Client     *Client
 }
 
+// marshalData is used to ensure the data is put into a format Terraform can output
 func marshalData(d *schema.ResourceData, vals map[string]interface{}) {
 	for k, v := range vals {
 		if k == "id" {
@@ -63,6 +65,7 @@ func marshalData(d *schema.ResourceData, vals map[string]interface{}) {
 	}
 }
 
+// newProviderClient is a factory for creating ProviderClient structs
 func newProviderClient(apiVersion, hostname string, headers http.Header) (ProviderClient, error) {
 	p := ProviderClient{
 		ApiVersion: apiVersion,
@@ -73,6 +76,7 @@ func newProviderClient(apiVersion, hostname string, headers http.Header) (Provid
 	return p, nil
 }
 
+// providerConfigure parses the config into the Terraform provider meta object
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	apiVersion := d.Get("api_version").(string)
 	if apiVersion == "" {

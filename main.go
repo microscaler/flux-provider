@@ -16,7 +16,6 @@ package main
 
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/plugin"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
 	"github.com/microscaler/flux-provider/pkg/provider"
 )
 
