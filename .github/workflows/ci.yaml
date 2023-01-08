@@ -2,7 +2,7 @@ name: "CI"
 on: [pull_request, push]
 
 jobs:
-  kind:
+  Build-Test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,6 +19,8 @@ jobs:
         with:
           go-version: 1.19.x
       - uses: actions/checkout@master
+      - name: Install dependencies
+        run: make dependencies
       - name: Build
         run: make
       - uses: engineerd/setup-kind@v0.5.0

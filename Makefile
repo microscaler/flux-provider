@@ -2,6 +2,9 @@ PKG_NAME=microscaler-flux
 
 default: build
 
+dependencies:
+	GO111MODULE=on go install github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs
+
 build:
 	GO111MODULE=on CGO_ENABLED=0 GOOS=linux go build -o ./bin/terraform-provider-${PKG_NAME} -a -ldflags '-extldflags "-static"' main.go
 
