@@ -16,10 +16,12 @@ package main
 
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/plugin"
-	"github.com/microscaler/flux-provider/cmd/flux"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
+	"github.com/microscaler/flux-provider/pkg/provider"
 )
 
 func main() {
 	plugin.Serve(&plugin.ServeOpts{
-		ProviderFunc: flux.Provider})
+		ProviderFunc: provider.Provider,
+	})
 }
